@@ -1,6 +1,6 @@
 package com.ldm.library.framework.exception;
 
-import com.ldm.library.framework.enumerate.ErrorCodeEnum;
+import com.ldm.library.framework.enumerate.ResponseEnum;
 import lombok.Getter;
 
 /**
@@ -12,14 +12,14 @@ import lombok.Getter;
  */
 @Getter
 public class BusinessException extends RuntimeException {
-    private final ErrorCodeEnum errorCode;
+    private final ResponseEnum errorCode;
 
-    public BusinessException(ErrorCodeEnum errorCode) {
+    public BusinessException(ResponseEnum errorCode) {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
 
-    public BusinessException(ErrorCodeEnum errorCode, Throwable cause) {
+    public BusinessException(ResponseEnum errorCode, Throwable cause) {
         super(errorCode.getMessage(), cause);
         this.errorCode = errorCode;
     }

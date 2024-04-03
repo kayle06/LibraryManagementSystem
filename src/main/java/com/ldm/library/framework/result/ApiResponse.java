@@ -2,6 +2,8 @@ package com.ldm.library.framework.result;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 /**
  * @ClassName ApiResponse
  * @Description 通用的响应对象
@@ -11,11 +13,13 @@ import lombok.Data;
  */
 @Data
 public class ApiResponse<T> {
-    private int code; // 状态码
+    private int code;
 
-    private String msg; // 返回消息
+    private String msg;
 
-    private T data; // 携带的数据
+    private T data;
+
+    private String traceId = generateTraceId();
 
     private ApiResponse() {
     }
@@ -26,13 +30,19 @@ public class ApiResponse<T> {
         this.data = data;
     }
 
+    public static <T> ApiResponse<T> success() {
+        return new ApiResponse<>(200, "操作成功", null);
+    }
+
     public static <T> ApiResponse<T> success(T data) {
         return new ApiResponse<>(200, "操作成功", data);
     }
 
-    // 快速创建失败响应的方法
     public static <T> ApiResponse<T> error(int code, String msg) {
         return new ApiResponse<>(code, msg, null);
     }
 
+    private String generateTraceId() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 }

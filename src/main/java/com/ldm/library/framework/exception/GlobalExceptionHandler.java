@@ -1,6 +1,6 @@
 package com.ldm.library.framework.exception;
 
-import com.ldm.library.framework.enumerate.ErrorCodeEnum;
+import com.ldm.library.framework.enumerate.ResponseEnum;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BusinessException.class)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleLibraryException(BusinessException ex) {
-        ErrorCodeEnum errorCode = ex.getErrorCode();
+        ResponseEnum errorCode = ex.getErrorCode();
         ErrorResponse errorResponse = new ErrorResponse(errorCode.getCode(), errorCode.getMessage());
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
