@@ -20,8 +20,21 @@ public enum ResponseEnum {
     // 图书相关
     FAILED_TO_ADD_BOOK(2001, "添加图书失败"),
     SUCCESS_TO_ADD_BOOK(2002, "添加图书成功"),
-    FAILED_TO_DELETE_BOOK(2003, "删除图书失败"),;
+    FAILED_TO_DELETE_BOOK(2003, "删除图书失败"),
+    SUCCESS_TO_DELETE_BOOK(2004, "删除图书成功"),
+    FAILED_TO_UPDATE_BOOK(2005, "更新图书失败"),
+    SUCCESS_TO_UPDATE_BOOK(2006, "更新图书成功"),
 
+
+    // ==================== 图书分类相关 ====================
+    FAILED_TO_ADD_CATEGORY(3001, "添加图书分类失败"),
+    SUCCESS_TO_ADD_CATEGORY(3002, "添加图书分类成功"),
+    FAILED_TO_UPDATE_CATEGORY(3003, "更新图书分类失败"),
+    SUCCESS_TO_UPDATE_CATEGORY(3004, "更新图书分类成功"),
+    FAILED_TO_DELETE_CATEGORY(3005, "删除图书分类失败"),
+    SUCCESS_TO_DELETE_CATEGORY(3006, "删除图书分类成功"),
+
+    ;
     private final int code;
     private final String message;
 

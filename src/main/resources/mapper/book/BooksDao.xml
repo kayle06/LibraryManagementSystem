@@ -1,22 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ldm.library.framework.dao.book.BooksDao">
-  <resultMap id="BaseResultMap" type="com.ldm.library.framework.domain.entity.Books">
-    <!--@mbg.generated-->
-    <!--@Table books-->
-    <id column="book_id" jdbcType="INTEGER" property="bookId" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="author" jdbcType="VARCHAR" property="author" />
-    <result column="isbn" jdbcType="VARCHAR" property="isbn" />
-    <result column="publisher" jdbcType="VARCHAR" property="publisher" />
-    <result column="publication_year" jdbcType="OTHER" property="publicationYear" />
-    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
-    <result column="status" jdbcType="INTEGER" property="status" />
-    <result column="shelf_location" jdbcType="VARCHAR" property="shelfLocation" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated-->
-    book_id, title, author, isbn, publisher, publication_year, category_id, `status`, 
-    shelf_location
-  </sql>
+<mapper namespace="com.ldm.library.business.admin.book.dao.BooksDao">
+    <resultMap id="BaseResultMap" type="com.ldm.library.business.admin.book.domain.entity.Books">
+        <!--@mbg.generated-->
+        <!--@Table books-->
+        <id column="book_id" jdbcType="INTEGER" property="bookId"/>
+        <result column="title" jdbcType="VARCHAR" property="title"/>
+        <result column="author" jdbcType="VARCHAR" property="author"/>
+        <result column="isbn" jdbcType="VARCHAR" property="isbn"/>
+        <result column="publisher" jdbcType="VARCHAR" property="publisher"/>
+        <result column="publication_year" jdbcType="OTHER" property="publicationYear"/>
+        <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
+        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="shelf_location" jdbcType="VARCHAR" property="shelfLocation"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated-->
+        book_id,
+        title,
+        author,
+        isbn,
+        publisher,
+        publication_year,
+        category_id,
+        `status`,
+        shelf_location
+    </sql>
+
+    <!--  获取借阅量前 5 的图书-->
+    <select id="top5" resultType="com.ldm.library.business.admin.book.domain.vo.Top5Vo">
+        SELECT b.title AS bookName,
+               COUNT(DISTINCT bb.borrow_id) AS borrowCount,
+               COUNT(DISTINCT ret.return_id)       AS returnCount
+        FROM books b
+                 LEFT JOIN
+             book_borrow bb ON b.book_id = bb.book_id
+                 LEFT JOIN
+             book_return ret ON b.book_id = ret.book_id
+        GROUP BY b.book_id, b.title, b.author
+        ORDER BY borrowCount DESC LIMIT 5;
+    </select>
+
+    <select id="todayPurchaseBooks" resultType="int">
+        SELECT COUNT(book_id)
+        FROM books b
+        WHERE b.create_time &gt;= DATE_FORMAT(NOW(), '%Y-%m-%d 00:00:00')
+          AND b.create_time &lt;= DATE_FORMAT(NOW(), '%Y-%m-%d 23:59:59');
+    </select>
 </mapper>

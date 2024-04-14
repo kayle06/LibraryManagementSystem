@@ -10,7 +10,7 @@ import lombok.Getter;
  * @Date 2024/04/03
  */
 @Getter
-public enum HttpCode {
+public enum HttpCode{
     // 通用状态码
     SUCCESS(200, "成功"),
     BAD_REQUEST(400, "错误的请求"),
@@ -19,7 +19,9 @@ public enum HttpCode {
     NOT_FOUND(404, "未找到资源"),
     METHOD_NOT_ALLOWED(405, "方法不允许"),
     INTERNAL_SERVER_ERROR(500, "服务器内部错误"),
-    SERVICE_UNAVAILABLE(503, "服务不可用");
+    SERVICE_UNAVAILABLE(503, "服务不可用"),
+    PARAM_ERROR(40001, "参数错误"),
+    ;
 
     private final int code;
     private final String message;

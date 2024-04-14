@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldm.library.business.admin.reservation.dao.BookReservationDao">
+
+    <select id="todayBookedBooks" resultType="int">
+        SELECT COUNT(reservation_id)
+        FROM book_reservation
+        WHERE create_time &gt;= DATE_FORMAT(NOW(), '%Y-%m-%d 00:00:00')
+        AND create_time &lt;= DATE_FORMAT(NOW(), '%Y-%m-%d 23:59:59')
+    </select>
+</mapper>
