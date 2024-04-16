@@ -24,6 +24,9 @@ public enum ResponseEnum {
     SUCCESS_TO_DELETE_BOOK(2004, "删除图书成功"),
     FAILED_TO_UPDATE_BOOK(2005, "更新图书失败"),
     SUCCESS_TO_UPDATE_BOOK(2006, "更新图书成功"),
+    FAILED_TO_SEARCH_BOOK(2007, "搜索图书失败"),
+    SUCCESS_TO_SEARCH_BOOK(2008, "搜索图书成功"),
+    BOOK_NOT_EXIST(2009, "图书不存在"),
 
 
     // ==================== 图书分类相关 ====================

@@ -1,9 +1,12 @@
 package com.ldm.library.business.admin.book.controller;
 
+import com.github.pagehelper.PageInfo;
+import com.ldm.library.business.admin.book.domain.dto.SelectBookDto;
+import com.ldm.library.business.admin.book.domain.entity.Books;
+import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
 import com.ldm.library.business.admin.book.domain.vo.TodayDataVo;
 import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
 import com.ldm.library.business.admin.book.service.BookInfoService;
-import com.ldm.library.business.admin.book.domain.entity.Books;
 import com.ldm.library.framework.result.ApiResponse;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,15 +64,27 @@ public class BookInfoController {
     }
 
     /**
-     * @param id 需要查询的图书ID
-     * @return {@link ApiResponse }<{@link List }<{@link Books }>>
-     * @Description 查询图书信息。不传即为查询所有图书信息
+     * @param reqBody 入参
+     * @return {@link ApiResponse }<{@link PageInfo }<{@link BookCategoryNameVo }>>
+     * @Description 查询图书信息。根据条件查询
      * @Author ldm
-     * @Date 2024/04/11
+     * @Date 2024/04/15
      */
-    @GetMapping("/select")
-    public ApiResponse<List<Books>> select(@RequestBody List<Integer> id) {
-        return bookInfoService.select(id);
+    @GetMapping("/list")
+    public ApiResponse<PageInfo<BookCategoryNameVo>> select(SelectBookDto reqBody) {
+        return bookInfoService.select(reqBody);
+    }
+
+    /**
+     * @param id 图书ID
+     * @return {@link ApiResponse }<{@link Books }>
+     * @Description 查询图书信息。根据ID查询
+     * @Author ldm
+     * @Date 2024/04/15
+     */
+    @GetMapping("/detail/{id}")
+    public ApiResponse<Books> selectById(@PathVariable Long id) {
+        return bookInfoService.selectById(id);
     }
 
     /**

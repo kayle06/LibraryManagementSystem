@@ -1,20 +1,23 @@
-package com.ldm.library.business.admin.book.domain.entity;
+package com.ldm.library.business.admin.book.domain.vo;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.util.Date;
 
 /**
- * 图书信息表
+ * @ClassName BookCategoryNameVo
+ * @Description 图书实体全部属性外加分类名称
+ * @Author ldm
+ * @Version 1.0
+ * @Date 2024/4/15 21:14
  */
 @Data
-public class Books {
+public class BookCategoryNameVo {
     /**
      * 图书ID
      */
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Integer bookId;
 
     /**
@@ -66,4 +69,9 @@ public class Books {
      * 更新时间
      */
     private Date updateTime;
+
+    /**
+     * 分类名称
+     */
+    private String categoryName;
 }

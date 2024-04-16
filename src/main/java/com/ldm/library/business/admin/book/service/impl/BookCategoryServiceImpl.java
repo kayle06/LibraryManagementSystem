@@ -28,7 +28,7 @@ import java.util.List;
 @Slf4j
 public class BookCategoryServiceImpl extends ServiceImpl<BookCategoriesMapper, BookCategories> implements BookCategoryService {
     @Override
-    public ApiResponse<Page<BookCategories>> listAll(SelectCategoryDto req) {
+    public ApiResponse<Page<BookCategories>> list(SelectCategoryDto req) {
         Page<BookCategories> bookCategoriesPage = new Page<>(req.getPageNum(), req.getPageSize());
         QueryWrapper<BookCategories> desc = new QueryWrapper<BookCategories>()
                 .like(req.getCategoryName()!= null, "category_name", req.getCategoryName())
@@ -83,6 +83,12 @@ public class BookCategoryServiceImpl extends ServiceImpl<BookCategoriesMapper, B
         queryWrapper.like("category_name", name)
                 .orderByDesc("create_time");
         List<BookCategories> list = list(queryWrapper);
+        return ApiResponse.success(list);
+    }
+
+    @Override
+    public ApiResponse<List<BookCategories>> listAll() {
+        List<BookCategories> list = list();
         return ApiResponse.success(list);
     }
 }

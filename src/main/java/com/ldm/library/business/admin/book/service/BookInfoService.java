@@ -1,9 +1,12 @@
 package com.ldm.library.business.admin.book.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.github.pagehelper.PageInfo;
+import com.ldm.library.business.admin.book.domain.dto.SelectBookDto;
+import com.ldm.library.business.admin.book.domain.entity.Books;
+import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
 import com.ldm.library.business.admin.book.domain.vo.TodayDataVo;
 import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
-import com.ldm.library.business.admin.book.domain.entity.Books;
 import com.ldm.library.framework.result.ApiResponse;
 
 import java.util.List;
@@ -44,13 +47,13 @@ public interface BookInfoService extends IService<Books> {
     ApiResponse<String> update(Books reqBody);
 
     /**
-     * @param id 需要查询的图书ID
-     * @return {@link ApiResponse }<{@link String }>
+     * @param title@return {@link ApiResponse }<{@link String }>
+     * @param reqBody
      * @Description 查询图书信息，不传为查询全部
      * @Author ldm
      * @Date 2024/04/11
      */
-    ApiResponse<List<Books>> select(List<Integer> id);
+    ApiResponse<PageInfo<BookCategoryNameVo>> select(SelectBookDto reqBody);
 
     /**
      * @return {@link ApiResponse }<{@link List }<{@link Books }>>
@@ -67,4 +70,14 @@ public interface BookInfoService extends IService<Books> {
      * @Date 2024/04/13
      */
     ApiResponse<TodayDataVo> todayData();
+
+    /**
+     * @param id 图书主键
+     * @return {@link ApiResponse }<{@link Books }>
+     * @Description 查询图书信息
+     * @Author ldm
+     * @Date 2024/04/15
+     */
+    ApiResponse<Books> selectById(Long id);
+
 }

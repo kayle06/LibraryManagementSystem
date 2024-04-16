@@ -7,9 +7,7 @@
         <id column="book_id" jdbcType="INTEGER" property="bookId"/>
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="author" jdbcType="VARCHAR" property="author"/>
-        <result column="isbn" jdbcType="VARCHAR" property="isbn"/>
         <result column="publisher" jdbcType="VARCHAR" property="publisher"/>
-        <result column="publication_year" jdbcType="OTHER" property="publicationYear"/>
         <result column="category_id" jdbcType="INTEGER" property="categoryId"/>
         <result column="status" jdbcType="INTEGER" property="status"/>
         <result column="shelf_location" jdbcType="VARCHAR" property="shelfLocation"/>
@@ -19,9 +17,7 @@
         book_id,
         title,
         author,
-        isbn,
         publisher,
-        publication_year,
         category_id,
         `status`,
         shelf_location
@@ -46,5 +42,18 @@
         FROM books b
         WHERE b.create_time &gt;= DATE_FORMAT(NOW(), '%Y-%m-%d 00:00:00')
           AND b.create_time &lt;= DATE_FORMAT(NOW(), '%Y-%m-%d 23:59:59');
+    </select>
+
+    <select id="list" resultType="com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo">
+        SELECT b.*, c.category_name
+        FROM books b
+            LEFT JOIN book_categories c ON b.category_id = c.category_id
+        <where>
+            <if test="title!= null and title!= ''">
+                AND title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            AND b.flag = 0
+        </where>
+        ORDER BY b.create_time DESC
     </select>
 </mapper>

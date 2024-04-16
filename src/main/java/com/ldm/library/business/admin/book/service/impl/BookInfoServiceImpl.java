@@ -1,7 +1,12 @@
 package com.ldm.library.business.admin.book.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.ldm.library.business.admin.book.dao.BooksDao;
+import com.ldm.library.business.admin.book.domain.dto.SelectBookDto;
+import com.ldm.library.business.admin.book.domain.entity.Books;
+import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
 import com.ldm.library.business.admin.book.domain.vo.TodayDataVo;
 import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
 import com.ldm.library.business.admin.book.service.BookInfoService;
@@ -9,9 +14,9 @@ import com.ldm.library.business.admin.borrow.dao.BookBorrowDao;
 import com.ldm.library.business.admin.reservation.dao.BookReservationDao;
 import com.ldm.library.business.admin.restitution.dao.BookReturnDao;
 import com.ldm.library.business.admin.user.dao.UserDao;
-import com.ldm.library.business.admin.book.domain.entity.Books;
 import com.ldm.library.framework.enumerate.ResponseEnum;
 import com.ldm.library.framework.result.ApiResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -36,10 +41,14 @@ public class BookInfoServiceImpl extends ServiceImpl<BooksDao, Books> implements
     private BookReservationDao reservationDao;
     @Resource
     private UserDao userDao;
+    @Autowired
+    private BooksDao booksDao;
 
     @Override
     public ApiResponse<String> add(Books reqBody) {
-        this.save(reqBody);
+        reqBody.setStatus(1);
+        reqBody.setFlag(0);
+        save(reqBody);
         return ApiResponse.success();
     }
 
@@ -60,14 +69,15 @@ public class BookInfoServiceImpl extends ServiceImpl<BooksDao, Books> implements
     }
 
     @Override
-    public ApiResponse<List<Books>> select(List<Integer> id) {
-        List<Books> booksList;
-        if (Objects.isNull(id) || id.isEmpty()) {
-            booksList = this.list();
-        } else {
-            booksList = this.listByIds(id);
-        }
-        return ApiResponse.success(booksList);
+    public ApiResponse<PageInfo<BookCategoryNameVo>> select(SelectBookDto reqBody) {
+        // 使用 PageHelper 开始分页，设置分页参数
+        PageHelper.startPage(reqBody.getPageNum(), reqBody.getPageSize());
+        // 调用您的 DAO 方法进行查询
+//        List<BookCategoryNameVo> booksList = booksDao.list(reqBody.getTitle());
+        // 使用 PageHelper 提供的 Page 类包装查询结果
+//        Page<BookCategoryNameVo> resultPage = (Page<BookCategoryNameVo>) booksList;
+        PageInfo<BookCategoryNameVo> pageInfo = new PageInfo<>(booksDao.list(reqBody.getTitle()));
+        return ApiResponse.success(pageInfo);
     }
 
     @Override
@@ -107,5 +117,15 @@ public class BookInfoServiceImpl extends ServiceImpl<BooksDao, Books> implements
                 .build();
 
         return ApiResponse.success(answer);
+    }
+
+    @Override
+    public ApiResponse<Books> selectById(Long id) {
+        Books book = this.getById(id);
+        if (Objects.nonNull(book)) {
+            return ApiResponse.success(book);
+        }
+        return ApiResponse.error(ResponseEnum.BOOK_NOT_EXIST.getCode(),
+                ResponseEnum.BOOK_NOT_EXIST.getMessage());
     }
 }

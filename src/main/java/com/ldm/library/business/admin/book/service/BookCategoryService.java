@@ -25,7 +25,7 @@ public interface BookCategoryService extends IService<BookCategories> {
      * @Author ldm
      * @Date 2024/04/14
      */
-    ApiResponse<Page<BookCategories>> listAll(SelectCategoryDto req);
+    ApiResponse<Page<BookCategories>> list(SelectCategoryDto req);
 
     /**
      * @param id 图书分类ID
@@ -71,4 +71,12 @@ public interface BookCategoryService extends IService<BookCategories> {
      * @Date 2024/04/14
      */
     ApiResponse<List<BookCategories>> list(String name);
+
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link BookCategories }>>
+     * @Description 查询所有图书分类列表
+     * @Author ldm
+     * @Date 2024/04/15
+     */
+    ApiResponse<List<BookCategories>> listAll();
 }

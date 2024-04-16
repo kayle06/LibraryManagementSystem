@@ -1,8 +1,11 @@
 package com.ldm.library.business.admin.book.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
+import com.github.pagehelper.Page;
 import com.ldm.library.business.admin.book.domain.entity.Books;
+import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
+import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -30,4 +33,6 @@ public interface BooksDao extends BaseMapper<Books> {
      */
     int todayPurchaseBooks();
 
+    Page<BookCategoryNameVo> list(
+                                  @Param("title") String title);
 }

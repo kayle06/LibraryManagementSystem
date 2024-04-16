@@ -36,9 +36,16 @@ public class BookCategoryController {
      * @Date 2024/04/14
      */
     @GetMapping("/list")
-    public ApiResponse<Page<BookCategories>> listAll(SelectCategoryDto req) {
-        return bookCategoryService.listAll(req);
+    public ApiResponse<Page<BookCategories>> list(SelectCategoryDto req) {
+        return bookCategoryService.list(req);
     }
+
+    @GetMapping("/listAll")
+
+    public ApiResponse<List<BookCategories>> listAll() {
+        return bookCategoryService.listAll();
+    }
+
 
     /**
      * @param id 分类ID
