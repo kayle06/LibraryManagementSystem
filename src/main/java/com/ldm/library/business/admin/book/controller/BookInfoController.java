@@ -140,4 +140,36 @@ public class BookInfoController {
         return bookInfoService.borrowTopFive();
     }
 
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link PopularBooksVo }>>
+     * @Description 热门图书分析
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    @GetMapping("/popularBooks")
+    public ApiResponse<List<PopularBooksVo>> popularBooks() {
+        return bookInfoService.popularBooks();
+    }
+
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link CategoryAnalyseVo }>>
+     * @Description 图书分类分析
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    @GetMapping("/categoryAnalyse")
+    public ApiResponse<List<CategoryAnalyseVo>> categoryAnalyse() {
+        return bookInfoService.categoryAnalyse();
+    }
+
+    /**
+     * @return {@link ApiResponse }<{@link BookCirculationVo }>
+     * @Description 图书流通分析
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    @GetMapping("/bookCirculation")
+    public ApiResponse<BookCirculationVo> bookCirculation() {
+        return bookInfoService.bookCirculation();
+    }
 }

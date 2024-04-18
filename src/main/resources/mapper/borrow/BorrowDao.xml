@@ -43,4 +43,44 @@
         ORDER BY borrowCount DESC
         LIMIT 5
     </select>
+
+    <select id="popularBooks" resultType="com.ldm.library.business.admin.book.domain.vo.PopularBooksVo">
+        SELECT b.title AS title,
+               COUNT(DISTINCT bb.borrow_id) AS borrowCount
+        FROM books b
+                 LEFT JOIN book_borrow bb ON b.book_id = bb.book_id
+        GROUP BY b.book_id, b.title
+        ORDER BY borrowCount DESC
+        LIMIT 20
+    </select>
+
+    <select id="bookCirculation" resultType="com.ldm.library.business.admin.book.domain.pojo.BookCirculationPojo">
+        SELECT
+            y.year,
+            COALESCE(b.borrow_count, 0) AS borrow_count,
+            COALESCE(r.return_count, 0) AS return_count,
+            COALESCE(res.reservation_count, 0) AS reservation_count
+        FROM
+                (SELECT DISTINCT YEAR(borrow_date) AS year FROM book_borrow) y
+                    LEFT JOIN
+            (
+                SELECT YEAR(borrow_date) AS year, COUNT(*) AS borrow_count
+                FROM book_borrow
+                GROUP BY YEAR(borrow_date)
+            ) b ON y.year = b.year
+                    LEFT JOIN
+            (
+                SELECT YEAR(create_time) AS year, COUNT(*) AS return_count
+                FROM book_return
+                GROUP BY YEAR(create_time)
+            ) r ON y.year = r.year
+                    LEFT JOIN
+            (
+                SELECT YEAR(create_time) AS year, COUNT(*) AS reservation_count
+                FROM book_reservation
+                GROUP BY YEAR(create_time)
+            ) res ON y.year = res.year
+        ORDER BY
+            y.year;
+    </select>
 </mapper>

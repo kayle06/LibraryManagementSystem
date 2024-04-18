@@ -104,4 +104,13 @@
                  LEFT JOIN daily_return dr ON d.day = dr.return_day
         ORDER BY FIELD(day, '周一', '周二', '周三', '周四', '周五', '周六', '周日')
     </select>
+
+    <select id="categoryAnalyse" resultType="com.ldm.library.business.admin.book.domain.vo.CategoryAnalyseVo">
+        SELECT c.category_name AS category,
+               COUNT(b.book_id) AS number
+        FROM books b
+                 RIGHT JOIN book_categories c ON b.category_id = c.category_id
+        WHERE b.flag = 0
+        GROUP BY c.category_name
+    </select>
 </mapper>

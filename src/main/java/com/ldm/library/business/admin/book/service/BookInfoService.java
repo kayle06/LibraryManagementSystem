@@ -101,4 +101,28 @@ public interface BookInfoService extends IService<Books> {
      * @Date 2024/04/18
      */
     ApiResponse<List<BorrowTopFive>> borrowTopFive();
+
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link PopularBooksVo }>>
+     * @Description 热门图书
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    ApiResponse<List<PopularBooksVo>> popularBooks();
+
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link CategoryAnalyseVo }>>
+     * @Description 分类分析
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    ApiResponse<List<CategoryAnalyseVo>> categoryAnalyse();
+
+    /**
+     * @return {@link ApiResponse }<{@link BookCirculationVo }>
+     * @Description 图书流通情况
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    ApiResponse<BookCirculationVo> bookCirculation();
 }

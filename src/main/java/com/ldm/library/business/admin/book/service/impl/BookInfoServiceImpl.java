@@ -6,6 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.ldm.library.business.admin.book.dao.BooksDao;
 import com.ldm.library.business.admin.book.domain.dto.SelectBookDto;
 import com.ldm.library.business.admin.book.domain.entity.Books;
+import com.ldm.library.business.admin.book.domain.pojo.BookCirculationPojo;
 import com.ldm.library.business.admin.book.domain.vo.*;
 import com.ldm.library.business.admin.book.service.BookInfoService;
 import com.ldm.library.business.admin.borrow.dao.BookBorrowDao;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -138,5 +140,52 @@ public class BookInfoServiceImpl extends ServiceImpl<BooksDao, Books> implements
     public ApiResponse<List<BorrowTopFive>> borrowTopFive() {
         List<BorrowTopFive> borrowTopFiveList = borrowDao.borrowTopFive();
         return ApiResponse.success(borrowTopFiveList);
+    }
+
+    @Override
+    public ApiResponse<List<PopularBooksVo>> popularBooks() {
+        List<PopularBooksVo> ans = borrowDao.popularBooks();
+        return ApiResponse.success(ans);
+    }
+
+    @Override
+    public ApiResponse<List<CategoryAnalyseVo>> categoryAnalyse() {
+        List<CategoryAnalyseVo> ans = baseMapper.categoryAnalyse();
+        return ApiResponse.success(ans);
+    }
+
+    @Override
+    public ApiResponse<BookCirculationVo> bookCirculation() {
+        List<BookCirculationPojo> historicalData = borrowDao.bookCirculation();
+        BookCirculationVo bookCirculationVo = new BookCirculationVo();
+        List<String> years = new ArrayList<>();
+        String[] name = {"借阅量", "归还量", "预约量"};
+        List<Integer> borrowCount = new ArrayList<>();
+        List<Integer> returnCount = new ArrayList<>();
+        List<Integer> reserveCount = new ArrayList<>();
+        List<BookCirculationVo.BookCirculationItemVo> bookCirculationItemVos = new ArrayList<>();
+
+        for (int i = 0; i < historicalData.size(); i++) {
+            years.add(historicalData.get(i).getYear());
+            borrowCount.add(historicalData.get(i).getBorrowCount());
+            returnCount.add(historicalData.get(i).getReturnCount());
+            reserveCount.add(historicalData.get(i).getReservationCount());
+        }
+
+        List<List<Integer>> value = new ArrayList<>();
+        value.add(borrowCount);
+        value.add(returnCount);
+        value.add(reserveCount);
+
+
+        for (int i = 0; i < name.length; i++) {
+            BookCirculationVo.BookCirculationItemVo bookCirculationItemVo = new BookCirculationVo.BookCirculationItemVo();
+            bookCirculationItemVo.setName(name[i]);
+            bookCirculationItemVo.setValue(value.get(i));
+            bookCirculationItemVos.add(bookCirculationItemVo);
+        }
+        bookCirculationVo.setYears(years);
+        bookCirculationVo.setItems(bookCirculationItemVos);
+        return ApiResponse.success(bookCirculationVo);
     }
 }

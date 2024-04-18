@@ -5,6 +5,7 @@ import com.github.pagehelper.Page;
 import com.ldm.library.business.admin.book.domain.entity.Books;
 import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
 import com.ldm.library.business.admin.book.domain.vo.BorrowAndReturnVo;
+import com.ldm.library.business.admin.book.domain.vo.CategoryAnalyseVo;
 import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
 import org.apache.ibatis.annotations.Param;
 
@@ -43,4 +44,12 @@ public interface BooksDao extends BaseMapper<Books> {
      * @Date 2024/04/18
      */
     List<BorrowAndReturnVo> borrowAndReturn();
+
+    /**
+     * @return {@link List }<{@link CategoryAnalyseVo }>
+     * @Description 分类分析
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    List<CategoryAnalyseVo> categoryAnalyse();
 }

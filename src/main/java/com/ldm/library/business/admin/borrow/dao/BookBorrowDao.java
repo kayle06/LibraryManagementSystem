@@ -2,7 +2,10 @@ package com.ldm.library.business.admin.borrow.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.Page;
+import com.ldm.library.business.admin.book.domain.pojo.BookCirculationPojo;
+import com.ldm.library.business.admin.book.domain.vo.BookCirculationVo;
 import com.ldm.library.business.admin.book.domain.vo.BorrowTopFive;
+import com.ldm.library.business.admin.book.domain.vo.PopularBooksVo;
 import com.ldm.library.business.admin.borrow.domain.entity.BookBorrow;
 import com.ldm.library.business.admin.borrow.domain.vo.BorrowListVo;
 import org.apache.ibatis.annotations.Param;
@@ -50,4 +53,20 @@ public interface BookBorrowDao extends BaseMapper<BookBorrow> {
      * @Date 2024/04/18
      */
     List<BorrowTopFive> borrowTopFive();
+
+    /**
+     * @return {@link List }<{@link PopularBooksVo }>
+     * @Description 查询热门图书
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    List<PopularBooksVo> popularBooks();
+
+    /**
+     * @return {@link BookCirculationVo }
+     * @Description 查询图书流通情况
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    List<BookCirculationPojo>  bookCirculation();
 }
