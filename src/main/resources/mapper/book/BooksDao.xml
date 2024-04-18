@@ -56,4 +56,52 @@
         </where>
         ORDER BY b.create_time DESC
     </select>
+
+    <select id="borrowAndReturn" resultType="com.ldm.library.business.admin.book.domain.vo.BorrowAndReturnVo">
+        WITH daily_borrow AS (SELECT CASE DAYNAME(borrow_date)
+                                         WHEN 'Monday' THEN '周一'
+                                         WHEN 'Tuesday' THEN '周二'
+                                         WHEN 'Wednesday' THEN '周三'
+                                         WHEN 'Thursday' THEN '周四'
+                                         WHEN 'Friday' THEN '周五'
+                                         WHEN 'Saturday' THEN '周六'
+                                         WHEN 'Sunday' THEN '周日'
+                                         END  AS borrow_day,
+                                     COUNT(*) AS borrow_count
+                              FROM book_borrow
+                              WHERE YEARWEEK(borrow_date) = YEARWEEK(CURDATE())
+                              GROUP BY borrow_day),
+             daily_return AS (SELECT CASE DAYNAME(create_time)
+                                         WHEN 'Monday' THEN '周一'
+                                         WHEN 'Tuesday' THEN '周二'
+                                         WHEN 'Wednesday' THEN '周三'
+                                         WHEN 'Thursday' THEN '周四'
+                                         WHEN 'Friday' THEN '周五'
+                                         WHEN 'Saturday' THEN '周六'
+                                         WHEN 'Sunday' THEN '周日'
+                                         END  AS return_day,
+                                     COUNT(*) AS return_count
+                              FROM book_return
+                              WHERE YEARWEEK(create_time) = YEARWEEK(CURDATE())
+                              GROUP BY return_day)
+        SELECT day,
+               COALESCE(db.borrow_count, 0) AS borrow_count,
+               COALESCE(dr.return_count, 0) AS return_count
+        FROM (SELECT '周一' AS day
+              UNION ALL
+              SELECT '周二'
+              UNION ALL
+              SELECT '周三'
+              UNION ALL
+              SELECT '周四'
+              UNION ALL
+              SELECT '周五'
+              UNION ALL
+              SELECT '周六'
+              UNION ALL
+              SELECT '周日') AS d
+                 LEFT JOIN daily_borrow db ON d.day = db.borrow_day
+                 LEFT JOIN daily_return dr ON d.day = dr.return_day
+        ORDER BY FIELD(day, '周一', '周二', '周三', '周四', '周五', '周六', '周日')
+    </select>
 </mapper>

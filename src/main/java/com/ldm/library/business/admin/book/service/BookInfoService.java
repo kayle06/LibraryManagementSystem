@@ -4,9 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.github.pagehelper.PageInfo;
 import com.ldm.library.business.admin.book.domain.dto.SelectBookDto;
 import com.ldm.library.business.admin.book.domain.entity.Books;
-import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
-import com.ldm.library.business.admin.book.domain.vo.TodayDataVo;
-import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
+import com.ldm.library.business.admin.book.domain.vo.*;
 import com.ldm.library.framework.result.ApiResponse;
 
 import java.util.List;
@@ -87,4 +85,20 @@ public interface BookInfoService extends IService<Books> {
      * @Date 2024/04/16
      */
     ApiResponse<List<Books>> selectAll();
+
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link BorrowAndReturnVo }>>
+     * @Description 查询本周借阅及归还数据
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    ApiResponse<List<BorrowAndReturnVo>> borrowAndReturn();
+
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link BorrowTopFive }>>
+     * @Description 查询借阅量最高的前5本图书
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    ApiResponse<List<BorrowTopFive>> borrowTopFive();
 }

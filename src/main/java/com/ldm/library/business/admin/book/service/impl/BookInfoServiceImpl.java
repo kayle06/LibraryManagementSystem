@@ -6,9 +6,7 @@ import com.github.pagehelper.PageInfo;
 import com.ldm.library.business.admin.book.dao.BooksDao;
 import com.ldm.library.business.admin.book.domain.dto.SelectBookDto;
 import com.ldm.library.business.admin.book.domain.entity.Books;
-import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
-import com.ldm.library.business.admin.book.domain.vo.TodayDataVo;
-import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
+import com.ldm.library.business.admin.book.domain.vo.*;
 import com.ldm.library.business.admin.book.service.BookInfoService;
 import com.ldm.library.business.admin.borrow.dao.BookBorrowDao;
 import com.ldm.library.business.admin.reservation.dao.BookReservationDao;
@@ -128,5 +126,17 @@ public class BookInfoServiceImpl extends ServiceImpl<BooksDao, Books> implements
     public ApiResponse<List<Books>> selectAll() {
         List<Books> booksList = this.list();
         return ApiResponse.success(booksList);
+    }
+
+    @Override
+    public ApiResponse<List<BorrowAndReturnVo>> borrowAndReturn() {
+        List<BorrowAndReturnVo> borrowAndReturnList = baseMapper.borrowAndReturn();
+        return ApiResponse.success(borrowAndReturnList);
+    }
+
+    @Override
+    public ApiResponse<List<BorrowTopFive>> borrowTopFive() {
+        List<BorrowTopFive> borrowTopFiveList = borrowDao.borrowTopFive();
+        return ApiResponse.success(borrowTopFiveList);
     }
 }

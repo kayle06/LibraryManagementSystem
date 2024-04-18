@@ -33,4 +33,14 @@
         </where>
         ORDER BY bb.create_time DESC
     </select>
+
+    <select id="borrowTopFive" resultType="com.ldm.library.business.admin.book.domain.vo.BorrowTopFive">
+        SELECT b.title                      AS title,
+               COUNT(DISTINCT bb.borrow_id) AS borrowCount
+        FROM books b
+                 LEFT JOIN book_borrow bb ON b.book_id = bb.book_id
+        GROUP BY b.book_id, b.title
+        ORDER BY borrowCount DESC
+        LIMIT 5
+    </select>
 </mapper>

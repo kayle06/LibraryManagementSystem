@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.Page;
 import com.ldm.library.business.admin.book.domain.entity.Books;
 import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
+import com.ldm.library.business.admin.book.domain.vo.BorrowAndReturnVo;
 import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
 import org.apache.ibatis.annotations.Param;
 
@@ -33,6 +34,13 @@ public interface BooksDao extends BaseMapper<Books> {
      */
     int todayPurchaseBooks();
 
-    Page<BookCategoryNameVo> list(
-                                  @Param("title") String title);
+    Page<BookCategoryNameVo> list(@Param("title") String title);
+
+    /**
+     * @return {@link List }<{@link BorrowAndReturnVo }>
+     * @Description 查询借阅和归还数据
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    List<BorrowAndReturnVo> borrowAndReturn();
 }

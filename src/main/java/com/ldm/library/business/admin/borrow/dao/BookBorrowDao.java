@@ -2,6 +2,7 @@ package com.ldm.library.business.admin.borrow.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.Page;
+import com.ldm.library.business.admin.book.domain.vo.BorrowTopFive;
 import com.ldm.library.business.admin.borrow.domain.entity.BookBorrow;
 import com.ldm.library.business.admin.borrow.domain.vo.BorrowListVo;
 import org.apache.ibatis.annotations.Param;
@@ -41,4 +42,12 @@ public interface BookBorrowDao extends BaseMapper<BookBorrow> {
      * @Date 2024/04/16
      */
     Page<BorrowListVo> list(@Param("title") String title, @Param("borrowerName") String borrowerName);
+
+    /**
+     * @return {@link List }<{@link BorrowTopFive }>
+     * @Description 查询借阅量最高的前5本图书
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    List<BorrowTopFive> borrowTopFive();
 }

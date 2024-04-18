@@ -3,9 +3,7 @@ package com.ldm.library.business.admin.book.controller;
 import com.github.pagehelper.PageInfo;
 import com.ldm.library.business.admin.book.domain.dto.SelectBookDto;
 import com.ldm.library.business.admin.book.domain.entity.Books;
-import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
-import com.ldm.library.business.admin.book.domain.vo.TodayDataVo;
-import com.ldm.library.business.admin.book.domain.vo.Top5Vo;
+import com.ldm.library.business.admin.book.domain.vo.*;
 import com.ldm.library.business.admin.book.service.BookInfoService;
 import com.ldm.library.framework.result.ApiResponse;
 import org.springframework.web.bind.annotation.*;
@@ -109,8 +107,37 @@ public class BookInfoController {
         return bookInfoService.top5();
     }
 
+    /**
+     * @return {@link ApiResponse }<{@link TodayDataVo }>
+     * @Description 查询图书今日新增、总量、总销量信息
+     * @Author ldm
+     * @Date 2024/04/18
+     */
     @GetMapping("/todayData")
     public ApiResponse<TodayDataVo> todayData() {
         return bookInfoService.todayData();
     }
+
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link BorrowAndReturnVo }>>
+     * @Description 查询本周借阅及归还数据
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    @GetMapping("/borrowAndReturn")
+    public ApiResponse<List<BorrowAndReturnVo>> borrowAndReturn() {
+        return bookInfoService.borrowAndReturn();
+    }
+
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link BorrowTopFive }>>
+     * @Description 查询借阅量最高的前5本图书
+     * @Author ldm
+     * @Date 2024/04/18
+     */
+    @GetMapping("/borrowTopFive")
+    public ApiResponse<List<BorrowTopFive>> borrowTopFive() {
+        return bookInfoService.borrowTopFive();
+    }
+
 }

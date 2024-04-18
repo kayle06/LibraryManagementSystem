@@ -11,6 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 
+/**
+ * @ClassName BookReservationController
+ * @Description 预约管理
+ * @Author ldm
+ * @Version 1.0
+ * @Date 2024/04/18
+ */
 @RestController
 @RequestMapping("/reservation")
 public class BookReservationController {
@@ -30,6 +37,13 @@ public class BookReservationController {
         return bookReservationService.list(reqBody);
     }
 
+    /**
+     * @param id 预约记录id
+     * @return {@link ApiResponse }<{@link String }>
+     * @Description 预约
+     * @Author ldm
+     * @Date 2024/04/18
+     */
     @PutMapping("/agree/{id}")
     public ApiResponse<String> agree(@PathVariable Long id) {
         return bookReservationService.agree(id);
