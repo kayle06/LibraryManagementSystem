@@ -80,4 +80,11 @@ public interface BookInfoService extends IService<Books> {
      */
     ApiResponse<Books> selectById(Long id);
 
+    /**
+     * @return {@link ApiResponse }<{@link List }<{@link Books }>>
+     * @Description 查询所有图书信息
+     * @Author ldm
+     * @Date 2024/04/16
+     */
+    ApiResponse<List<Books>> selectAll();
 }

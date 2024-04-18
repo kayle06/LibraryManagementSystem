@@ -70,12 +70,7 @@ public class BookInfoServiceImpl extends ServiceImpl<BooksDao, Books> implements
 
     @Override
     public ApiResponse<PageInfo<BookCategoryNameVo>> select(SelectBookDto reqBody) {
-        // 使用 PageHelper 开始分页，设置分页参数
         PageHelper.startPage(reqBody.getPageNum(), reqBody.getPageSize());
-        // 调用您的 DAO 方法进行查询
-//        List<BookCategoryNameVo> booksList = booksDao.list(reqBody.getTitle());
-        // 使用 PageHelper 提供的 Page 类包装查询结果
-//        Page<BookCategoryNameVo> resultPage = (Page<BookCategoryNameVo>) booksList;
         PageInfo<BookCategoryNameVo> pageInfo = new PageInfo<>(booksDao.list(reqBody.getTitle()));
         return ApiResponse.success(pageInfo);
     }
@@ -127,5 +122,11 @@ public class BookInfoServiceImpl extends ServiceImpl<BooksDao, Books> implements
         }
         return ApiResponse.error(ResponseEnum.BOOK_NOT_EXIST.getCode(),
                 ResponseEnum.BOOK_NOT_EXIST.getMessage());
+    }
+
+    @Override
+    public ApiResponse<List<Books>> selectAll() {
+        List<Books> booksList = this.list();
+        return ApiResponse.success(booksList);
     }
 }

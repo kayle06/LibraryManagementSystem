@@ -8,4 +8,15 @@
         WHERE create_time &gt;= DATE_FORMAT(NOW(), '%Y-%m-%d 00:00:00')
         AND create_time &lt;= DATE_FORMAT(NOW(), '%Y-%m-%d 23:59:59')
     </select>
+
+    <select id="list" resultType="com.ldm.library.business.admin.user.domain.entity.Users">
+        SELECT * FROM users
+        <where>
+            <if test="studentNo!= null">
+                AND student_no LIKE concat('%', #{studentNo}, '%')
+            </if>
+            AND flag = 1
+        </where>
+        ORDER BY create_time DESC
+    </select>
 </mapper>

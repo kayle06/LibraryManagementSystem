@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldm.library.business.admin.restitution.dao.BookReturnMapper">
+  <resultMap id="BaseResultMap" type="com.ldm.library.business.admin.restitution.domain.entity.BookReturn">
+    <!--@mbg.generated-->
+    <!--@Table book_return-->
+    <id column="return_id" jdbcType="INTEGER" property="returnId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    return_id, user_id, book_id, create_time
+  </sql>
+
+  <select id="list" resultType="com.ldm.library.business.admin.restitution.domain.vo.BookReturnVo">
+    SELECT br.*,
+    u.username,
+    b.title,
+    bb.due_date
+    FROM book_return br
+    LEFT JOIN users u ON br.user_id = u.user_id
+    LEFT JOIN books b ON br.book_id = b.book_id
+    LEFT JOIN book_borrow bb ON br.book_id = bb.book_id
+    <where>
+      <if test="returnName != null and returnName != ''">
+        u.username LIKE concat('%', #{returnName}, '%')
+      </if>
+    </where>
+    ORDER BY br.create_time DESC
+    </select>
+</mapper>

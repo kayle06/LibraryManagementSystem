@@ -76,6 +76,17 @@ public class BookInfoController {
     }
 
     /**
+     * @return {@link ApiResponse }<{@link List }<{@link Books }>>
+     * @Description 查询所有图书信息
+     * @Author ldm
+     * @Date 2024/04/16
+     */
+    @GetMapping("/listAll")
+    public ApiResponse<List<Books>> selectAll() {
+        return bookInfoService.selectAll();
+    }
+
+    /**
      * @param id 图书ID
      * @return {@link ApiResponse }<{@link Books }>
      * @Description 查询图书信息。根据ID查询

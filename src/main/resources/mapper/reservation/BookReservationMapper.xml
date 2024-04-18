@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ldm.library.business.admin.reservation.dao.BookReservationMapper">
+  <resultMap id="BaseResultMap" type="com.ldm.library.business.admin.reservation.domain.entity.BookReservation">
+    <!--@mbg.generated-->
+    <!--@Table book_reservation-->
+    <id column="reservation_id" jdbcType="INTEGER" property="reservationId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="book_id" jdbcType="INTEGER" property="bookId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    reservation_id, user_id, book_id, create_time
+  </sql>
+
+  <select id="list" resultType="com.ldm.library.business.admin.reservation.domain.vo.BookReservationVo">
+    SELECT br.*, books.title, users.username
+    FROM book_reservation br
+    LEFT JOIN books ON br.book_id = books.book_id
+    LEFT JOIN users ON br.user_id = users.user_id
+    <where>
+      <if test="searchCondition != null and searchCondition != ''">
+        AND books.title LIKE CONCAT('%', #{searchCondition}, '%')
+        OR users.username LIKE CONCAT('%', #{searchCondition}, '%')
+      </if>
+      AND br.status = 0
+    </where>
+    ORDER BY br.create_time DESC
+  </select>
+</mapper>

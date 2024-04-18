@@ -27,6 +27,8 @@ public enum ResponseEnum {
     FAILED_TO_SEARCH_BOOK(2007, "搜索图书失败"),
     SUCCESS_TO_SEARCH_BOOK(2008, "搜索图书成功"),
     BOOK_NOT_EXIST(2009, "图书不存在"),
+    SUCCESS_TO_RETURN_BOOK(2010, "归还图书成功"),
+    FAILED_TO_RETURN_BOOK(2011, "归还图书失败"),
 
 
     // ==================== 图书分类相关 ====================

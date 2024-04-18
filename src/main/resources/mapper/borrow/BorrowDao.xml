@@ -14,4 +14,23 @@
         FROM book_borrow
         WHERE due_date &lt; DATE_FORMAT(NOW(), '%Y-%m-%d')
     </select>
+
+    <select id="list" resultType="com.ldm.library.business.admin.borrow.domain.vo.BorrowListVo">
+        SELECT bb.*,
+        b.title,
+        u.username
+        FROM book_borrow bb
+        LEFT JOIN books b ON bb.book_id = b.book_id
+        LEFT JOIN users u ON bb.user_id = u.user_id
+        <where>
+            <if test="title != null and title != ''">
+                AND b.title LIKE CONCAT('%', #{title}, '%')
+            </if>
+            <if test="borrowerName != null and borrowerName != ''">
+                AND u.username LIKE CONCAT('%', #{borrowerName}, '%')
+            </if>
+            AND bb.status = 0
+        </where>
+        ORDER BY bb.create_time DESC
+    </select>
 </mapper>
