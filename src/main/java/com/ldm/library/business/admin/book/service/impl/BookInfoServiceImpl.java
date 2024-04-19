@@ -7,6 +7,7 @@ import com.ldm.library.business.admin.book.dao.BooksDao;
 import com.ldm.library.business.admin.book.domain.dto.SelectBookDto;
 import com.ldm.library.business.admin.book.domain.entity.Books;
 import com.ldm.library.business.admin.book.domain.pojo.BookCirculationPojo;
+import com.ldm.library.business.admin.book.domain.pojo.BookReservationPojo;
 import com.ldm.library.business.admin.book.domain.vo.*;
 import com.ldm.library.business.admin.book.service.BookInfoService;
 import com.ldm.library.business.admin.borrow.dao.BookBorrowDao;
@@ -187,5 +188,12 @@ public class BookInfoServiceImpl extends ServiceImpl<BooksDao, Books> implements
         bookCirculationVo.setYears(years);
         bookCirculationVo.setItems(bookCirculationItemVos);
         return ApiResponse.success(bookCirculationVo);
+    }
+
+    @Override
+    public ApiResponse<int[]> bookReservation() {
+        List<BookReservationPojo> weekData = baseMapper.bookReservation();
+        int[] ans = weekData.stream().mapToInt(BookReservationPojo::getReservationCount).toArray();
+        return ApiResponse.success(ans);
     }
 }

@@ -172,4 +172,9 @@ public class BookInfoController {
     public ApiResponse<BookCirculationVo> bookCirculation() {
         return bookInfoService.bookCirculation();
     }
+
+    @GetMapping("/bookReservation")
+    public ApiResponse<int[]> bookReservation() {
+        return bookInfoService.bookReservation();
+    }
 }

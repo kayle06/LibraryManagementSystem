@@ -113,4 +113,40 @@
         WHERE b.flag = 0
         GROUP BY c.category_name
     </select>
+
+    <select id="bookReservation" resultType="com.ldm.library.business.admin.book.domain.pojo.BookReservationPojo">
+        SELECT
+            d.weekday,
+            COALESCE(br.reservation_count, 0) AS reservation_count
+        FROM (
+                 SELECT '周一' AS weekday UNION ALL
+                 SELECT '周二' UNION ALL
+                 SELECT '周三' UNION ALL
+                 SELECT '周四' UNION ALL
+                 SELECT '周五' UNION ALL
+                 SELECT '周六' UNION ALL
+                 SELECT '周日'
+             ) AS d
+                 LEFT JOIN (
+            SELECT
+                CASE DAYNAME(create_time)
+                    WHEN 'Monday' THEN '周一'
+                    WHEN 'Tuesday' THEN '周二'
+                    WHEN 'Wednesday' THEN '周三'
+                    WHEN 'Thursday' THEN '周四'
+                    WHEN 'Friday' THEN '周五'
+                    WHEN 'Saturday' THEN '周六'
+                    WHEN 'Sunday' THEN '周日'
+                    END AS weekday,
+                COUNT(*) AS reservation_count
+            FROM
+                book_reservation
+            WHERE
+                YEARWEEK(create_time) = YEARWEEK(CURDATE())
+            GROUP BY
+                weekday
+        ) AS br ON d.weekday = br.weekday
+        ORDER BY
+            FIELD(d.weekday, '周一', '周二', '周三', '周四', '周五', '周六', '周日');
+    </select>
 </mapper>

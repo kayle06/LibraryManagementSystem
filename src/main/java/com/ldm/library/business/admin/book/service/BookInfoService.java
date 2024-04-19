@@ -125,4 +125,12 @@ public interface BookInfoService extends IService<Books> {
      * @Date 2024/04/18
      */
     ApiResponse<BookCirculationVo> bookCirculation();
+
+    /**
+     * @return {@link ApiResponse }<{@link int[] }>
+     * @Description 图书周预约量
+     * @Author ldm
+     * @Date 2024/04/19
+     */
+    ApiResponse<int[]> bookReservation();
 }

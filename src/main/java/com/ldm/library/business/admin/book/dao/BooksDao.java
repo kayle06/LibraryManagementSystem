@@ -3,6 +3,7 @@ package com.ldm.library.business.admin.book.dao;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.github.pagehelper.Page;
 import com.ldm.library.business.admin.book.domain.entity.Books;
+import com.ldm.library.business.admin.book.domain.pojo.BookReservationPojo;
 import com.ldm.library.business.admin.book.domain.vo.BookCategoryNameVo;
 import com.ldm.library.business.admin.book.domain.vo.BorrowAndReturnVo;
 import com.ldm.library.business.admin.book.domain.vo.CategoryAnalyseVo;
@@ -52,4 +53,12 @@ public interface BooksDao extends BaseMapper<Books> {
      * @Date 2024/04/18
      */
     List<CategoryAnalyseVo> categoryAnalyse();
+
+    /**
+     * @return {@link int[] }
+     * @Description 图书周预约量
+     * @Author ldm
+     * @Date 2024/04/19
+     */
+    List<BookReservationPojo> bookReservation();
 }
